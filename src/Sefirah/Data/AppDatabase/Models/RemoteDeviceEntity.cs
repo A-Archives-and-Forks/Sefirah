@@ -20,23 +20,23 @@ public class RemoteDeviceEntity
 
     public DateTime? LastConnected { get; set; }
 
-    [Column("IpAddresses")]
-    public string? IpAddressesJson { get; set; }
+    [Column("Addresses")]
+    public string? AddressesJson { get; set; }
     
     [Ignore]
-    public List<IpAddressEntry> IpAddresses
+    public List<AddressEntry> Addresses
     {
         get
         {
-            if (string.IsNullOrEmpty(IpAddressesJson)) return [];
+            if (string.IsNullOrEmpty(AddressesJson)) return [];
 
-            var entries = JsonSerializer.Deserialize<List<IpAddressEntry>>(IpAddressesJson);
+            var entries = JsonSerializer.Deserialize<List<AddressEntry>>(AddressesJson);
             if (entries is not null)
                 return entries;
 
             return [];
         }
-        set => IpAddressesJson = value is null ? null : JsonSerializer.Serialize(value);
+        set => AddressesJson = value is null ? null : JsonSerializer.Serialize(value);
     }
 
     [Column("PhoneNumbers")]
@@ -56,7 +56,7 @@ public class RemoteDeviceEntity
         {
             Name = Name,
             Model = Model,
-            IpAddresses = IpAddresses,
+            Addresses = Addresses,
             PhoneNumbers = PhoneNumbers,
             Wallpaper = await ImageHelper.ToBitmapAsync(WallpaperBytes),
         };

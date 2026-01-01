@@ -7,17 +7,17 @@ namespace Sefirah.Data.Models;
 
 public partial class PairedDevice : BaseRemoteDevice
 {
-    public List<IpAddressEntry> IpAddresses { get; set; } = [];
+    public List<AddressEntry> Addresses { get; set; } = [];
 
     /// <summary>
-    /// Gets enabled IP addresses sorted by priority (0 = highest priority)
+    /// Gets enabled addresses sorted by priority (0 = highest priority)
     /// </summary>
-    public List<string> GetEnabledIpAddresses()
+    public List<string> GetEnabledAddresses()
     {
-        return IpAddresses
+        return Addresses
             .Where(ip => ip.IsEnabled)
             .OrderBy(ip => ip.Priority)
-            .Select(ip => ip.IpAddress)
+            .Select(ip => ip.Address)
             .ToList();
     }
 
